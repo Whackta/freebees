@@ -8,7 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+<<<<<<< HEAD
 import android.view.LayoutInflater;
+=======
+import android.util.Log;
+>>>>>>> 0016bc0a4faaf49990ba03d21b50c27389401d46
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +23,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class EventListActivity extends AppCompatActivity {
 
@@ -41,10 +51,39 @@ public class EventListActivity extends AppCompatActivity {
             }
         });
 
+<<<<<<< HEAD
         mEventRecyclerView = (RecyclerView) findViewById(R.id.event_recycler_view);
         mEventRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         updateUI();
+=======
+
+
+
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, World!");
+
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                Log.d("message", "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("message", "Failed to read value.", error.toException());
+            }
+        });
+
+>>>>>>> 0016bc0a4faaf49990ba03d21b50c27389401d46
     }
 
     @Override
