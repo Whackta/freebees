@@ -2,6 +2,9 @@ package com.finalproject.cs4518.freebees;
 
 import android.graphics.Bitmap;
 
+import com.google.android.gms.location.places.Place;
+
+import java.io.Serializable;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,10 +13,12 @@ import java.util.Date;
  * Created by Henry on 12/8/2017.
  */
 
-public class Event {
+public class Event implements Serializable{
     private String mTitle;
     private String mOrganization;
     private String mDescription;
+    private String mLocation;
+    private Place mPlace;
     private Date mStartDate;
     private Date mEndDate;
 
@@ -27,6 +32,7 @@ public class Event {
         mTitle = "Dummy title";
         mOrganization = "Dummy organization";
         mDescription = "Dummy description";
+        mLocation = "123 Imaginary lane";
         mStartDate = new Date();
         mEndDate = new Date();
     }
@@ -39,12 +45,13 @@ public class Event {
      * @param startDate
      * @param endDate
      */
-    public Event(String title, String organization, String description, Date startDate, Date endDate){
+    public Event(String title, String organization, String description, Date startDate, Date endDate, String location){
         mTitle = title;
         mOrganization = organization;
         mDescription = description;
         mStartDate = startDate;
         mEndDate = endDate;
+        mLocation = location;
     }
 
     public String getTitle(){
@@ -67,6 +74,10 @@ public class Event {
         return mEndDate;
     }
 
+    public String getLocation(){return mLocation;}
+
+    public Place getPlace(){return mPlace;}
+
     public void setTitle(String title){
         mTitle = title;
     }
@@ -86,4 +97,8 @@ public class Event {
     public void setEndDate(Date date){
         mEndDate = date;
     }
+
+    public void setLocation(String loc){mLocation = loc;}
+
+    public void setPlace(Place place){mPlace = place;}
 }
