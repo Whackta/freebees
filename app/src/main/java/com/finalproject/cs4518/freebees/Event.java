@@ -3,6 +3,7 @@ package com.finalproject.cs4518.freebees;
 import android.graphics.Bitmap;
 
 import com.google.android.gms.location.places.Place;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
 import java.sql.Time;
@@ -21,6 +22,7 @@ public class Event implements Serializable{
     private Place mPlace;
     private Date mStartDate;
     private Date mEndDate;
+    private LatLng mLatLng;
 
     //TODO: image storing?
     private Bitmap mImage;
@@ -78,6 +80,8 @@ public class Event implements Serializable{
 
     public Place getPlace(){return mPlace;}
 
+    public LatLng getLatLng(){return mLatLng;}
+
     public void setTitle(String title){
         mTitle = title;
     }
@@ -101,4 +105,6 @@ public class Event implements Serializable{
     public void setLocation(String loc){mLocation = loc;}
 
     public void setPlace(Place place){mPlace = place;}
+
+    public void setLatLng(LatLng latlng){mLatLng = latlng;}
 }
