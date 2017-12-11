@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -23,7 +24,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceDetectionClient;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -42,6 +49,10 @@ public class EventCreationActivity extends FragmentActivity implements TimePicke
     Button mPostButton;
 
     Place mPlace;
+
+    GeoDataClient mGeoDataClient;
+    PlaceDetectionClient mPlaceDetectionClient;
+    int PLACE_PICKER = 1;
 
     final int START_TIME_CODE = 0;
     final int END_TIME_CODE = 1;
@@ -72,6 +83,10 @@ public class EventCreationActivity extends FragmentActivity implements TimePicke
                 "MMMM dd yyyy");
         SimpleDateFormat timeFormatter = new SimpleDateFormat(
                 "hh:mm a");
+
+        mGeoDataClient = Places.getGeoDataClient(this, null);
+        mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
+
 
         // setup the name entry
         mNameEntry.setImeOptions(EditorInfo.IME_ACTION_DONE);
@@ -178,8 +193,29 @@ public class EventCreationActivity extends FragmentActivity implements TimePicke
 
     }
 
-    public void showLocPickerDialog(View view) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_PICKER) {
+            if (resultCode == RESULT_OK) {
+                mPlace = PlacePicker.getPlace(data, this);
+                System.out.println("####### (Latitude, Longitude) = (" + mPlace.getLatLng().latitude + ", " + mPlace.getLatLng().longitude + ")");
+                System.out.println("####### Address: " + mPlace.getAddress().toString());
+                mEvent.setPlace(mPlace);
+                mEvent.setLatLng(mPlace.getLatLng());
+                mEvent.setLocation(mPlace.getAddress().toString());
+            }
+        }
+    }
 
+    public void showLocPickerDialog(View view) {
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        try {
+            startActivityForResult(builder.build(this), PLACE_PICKER);
+        } catch (GooglePlayServicesRepairableException gps) {
+            //TODO figure out when these are thrown and handle them
+            gps.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException gpsNA) {
+            gpsNA.printStackTrace();
+        }
     }
 
     public void PostIt(View view) {
