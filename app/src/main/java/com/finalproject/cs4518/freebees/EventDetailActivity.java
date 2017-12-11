@@ -182,7 +182,6 @@ public class EventDetailActivity extends AppCompatActivity implements GoogleMap.
 
     @Override
     public boolean onMarkerClick(final Marker marker) {
-
         // Retrieve the data from the marker.
         LatLng loc = mPlace.getLatLng();
         Double latitude = loc.latitude;

@@ -6,6 +6,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:timePickerDialogTheme">@style/PickerDialogCustom</item>
+        <item name="android:datePickerDialogTheme">@style/PickerDialogCustom</item>
+        <item name="alertDialogTheme">@style/AlertDialogCustom</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -16,5 +19,21 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="PickerDialogCustom" parent="AlertDialogCustom">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorControlNormal">@color/colorTitleText</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:datePickerMode">spinner</item>
+    </style>
+
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:positiveButtonText">@color/colorPrimary</item>
+        <item name="android:negativeButtonText">@color/colorTitleText</item>
+        <item name="android:datePickerStyle">@style/PickerDialogCustom</item>
+    </style>
 
 </resources>

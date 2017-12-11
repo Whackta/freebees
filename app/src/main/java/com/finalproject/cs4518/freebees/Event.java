@@ -23,6 +23,8 @@ public class Event implements Serializable{
     private Date mStartDate;
     private Date mEndDate;
     private LatLng mLatLng;
+    private long mStartDateAsMillis;
+    private long mEndDateAsMillis;
 
     //TODO: image storing?
     private Bitmap mImage;
@@ -82,6 +84,10 @@ public class Event implements Serializable{
 
     public LatLng getLatLng(){return mLatLng;}
 
+    public long getStartDateMillis(){return mStartDateAsMillis;}
+
+    public long getEndDateMillis(){return mEndDateAsMillis;}
+
     public void setTitle(String title){
         mTitle = title;
     }
@@ -107,4 +113,11 @@ public class Event implements Serializable{
     public void setPlace(Place place){mPlace = place;}
 
     public void setLatLng(LatLng latlng){mLatLng = latlng;}
+
+    public void setStartDateMillis(long sd){
+        mStartDateAsMillis = sd;
+    }
+    public void setEndDateMillis(long sd){
+        mEndDateAsMillis = sd;
+    }
 }
