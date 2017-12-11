@@ -3,29 +3,24 @@ package com.finalproject.cs4518.freebees;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.finalproject.cs4518.freebees.database.DatabaseController;
+import com.google.android.gms.maps.model.LatLng;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-/*import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;*/
 
 public class EventListActivity extends AppCompatActivity {
 
@@ -53,30 +48,7 @@ public class EventListActivity extends AppCompatActivity {
 
         updateUI();
 
-        // Write a message to the database
-        //FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //DatabaseReference myRef = database.getReference("message");
-
-        //myRef.setValue("Hello, World!");
-
-        // Read from the database
-        /*myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.d("message", "Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("message", "Failed to read value.", error.toException());
-            }
-        });
-
-        */
+        DatabaseController dbController = new DatabaseController();
     }
 
     @Override
@@ -109,9 +81,9 @@ public class EventListActivity extends AppCompatActivity {
         List<Event> events = new ArrayList<Event>();
         //TODO: make the event list not dummy
         Date testDate = new Date(2015, 7, 23, 4, 05);
-        events.add(new Event("Ed's lumber fiesta", "Ed's lumber yard", "Come to my lumber yard", testDate, testDate, "123 Lumber Way"));
-        events.add(new Event("Jim's hat fiesta", "Jim's hat yard", "Come to my hat yard", testDate, testDate, "321 Hat Way"));
-        events.add(new Event("Don's dog fiesta", "Don's dog yard", "Come to my dog yard", testDate, testDate, "543 Dog Way"));
+        events.add(new Event(1, "Ed's lumber fiesta", "Ed's lumber yard", "Come to my lumber yard", testDate, testDate, "123 Lumber Way", new LatLng(0.0, 0.0)));
+        events.add(new Event(2, "Jim's hat fiesta", "Jim's hat yard", "Come to my hat yard", testDate, testDate, "321 Hat Way", new LatLng(0.0, 0.0)));
+        events.add(new Event(3, "Don's dog fiesta", "Don's dog yard", "Come to my dog yard", testDate, testDate, "543 Dog Way", new LatLng(0.0, 0.0)));
 
         if(mAdapter == null){
             mAdapter = new eventAdapter(events);

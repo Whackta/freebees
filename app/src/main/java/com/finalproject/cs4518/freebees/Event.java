@@ -1,10 +1,7 @@
 package com.finalproject.cs4518.freebees;
 
-import android.graphics.Bitmap;
-
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.maps.model.LatLng;
-
 import java.io.Serializable;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -15,6 +12,7 @@ import java.util.Date;
  */
 
 public class Event implements Serializable{
+    private int mEventID;
     private String mTitle;
     private String mOrganization;
     private String mDescription;
@@ -26,13 +24,11 @@ public class Event implements Serializable{
     private long mStartDateAsMillis;
     private long mEndDateAsMillis;
 
-    //TODO: image storing?
-    private Bitmap mImage;
-
     /**
      * Simplest constructor for event, sets components to default values
      */
     public Event(){
+        mEventID = -1;
         mTitle = "Dummy title";
         mOrganization = "Dummy organization";
         mDescription = "Dummy description";
@@ -49,34 +45,28 @@ public class Event implements Serializable{
      * @param startDate
      * @param endDate
      */
-    public Event(String title, String organization, String description, Date startDate, Date endDate, String location){
+    public Event(int id, String title, String organization, String description, Date startDate, Date endDate, String loc, LatLng latlng){
+        mEventID = id;
         mTitle = title;
         mOrganization = organization;
         mDescription = description;
+        mLocation = loc;
+        mLatLng = latlng;
         mStartDate = startDate;
         mEndDate = endDate;
-        mLocation = location;
     }
 
-    public String getTitle(){
-        return mTitle;
-    }
+    public int getEventID(){ return mEventID; }
 
-    public String getOrganization(){
-        return mOrganization;
-    }
+    public String getTitle(){return mTitle;}
 
-    public String getDescription(){
-        return mDescription;
-    }
+    public String getOrganization(){return mOrganization;}
 
-    public Date getStartDate(){
-        return mStartDate;
-    }
+    public String getDescription(){return mDescription;}
 
-    public Date getEndDate(){
-        return mEndDate;
-    }
+    public Date getStartDate(){return mStartDate;}
+
+    public Date getEndDate(){return mEndDate;}
 
     public String getLocation(){return mLocation;}
 
@@ -92,21 +82,13 @@ public class Event implements Serializable{
         mTitle = title;
     }
 
-    public void setOrganization(String org){
-        mOrganization = org;
-    }
+    public void setOrganization(String org){mOrganization = org;}
 
-    public void setDescription(String desc){
-        mDescription = desc;
-    }
+    public void setDescription(String desc){mDescription = desc;}
 
-    public void setStartDate(Date date){
-        mStartDate = date;
-    }
+    public void setStartDate(Date date){mStartDate = date;}
 
-    public void setEndDate(Date date){
-        mEndDate = date;
-    }
+    public void setEndDate(Date date){mEndDate = date;}
 
     public void setLocation(String loc){mLocation = loc;}
 
@@ -120,4 +102,5 @@ public class Event implements Serializable{
     public void setEndDateMillis(long sd){
         mEndDateAsMillis = sd;
     }
+    public void setEventID(int id){ mEventID = id; }
 }
