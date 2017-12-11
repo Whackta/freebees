@@ -48,7 +48,7 @@ public class EventListActivity extends AppCompatActivity {
 
         updateUI();
 
-        DatabaseController dbController = new DatabaseController();
+        DatabaseController.getInstance();
     }
 
     @Override
@@ -81,9 +81,9 @@ public class EventListActivity extends AppCompatActivity {
         List<Event> events = new ArrayList<Event>();
         //TODO: make the event list not dummy
         Date testDate = new Date(2015, 7, 23, 4, 05);
-        events.add(new Event(1, "Ed's lumber fiesta", "Ed's lumber yard", "Come to my lumber yard", testDate, testDate, "123 Lumber Way", new LatLng(0.0, 0.0)));
-        events.add(new Event(2, "Jim's hat fiesta", "Jim's hat yard", "Come to my hat yard", testDate, testDate, "321 Hat Way", new LatLng(0.0, 0.0)));
-        events.add(new Event(3, "Don's dog fiesta", "Don's dog yard", "Come to my dog yard", testDate, testDate, "543 Dog Way", new LatLng(0.0, 0.0)));
+        events.add(new Event(1, "Ed's lumber fiesta", "Ed's lumber yard", "Come to my lumber yard", testDate, testDate, new LatLng(0.0, 0.0)));
+        events.add(new Event(2, "Jim's hat fiesta", "Jim's hat yard", "Come to my hat yard", testDate, testDate, new LatLng(0.0, 0.0)));
+        events.add(new Event(3, "Don's dog fiesta", "Don's dog yard", "Come to my dog yard", testDate, testDate, new LatLng(0.0, 0.0)));
 
         if(mAdapter == null){
             mAdapter = new eventAdapter(events);
@@ -113,7 +113,8 @@ public class EventListActivity extends AppCompatActivity {
         public void bind(Event theEvent){
             mEvent = theEvent;
             mEventNameTextView.setText(mEvent.getTitle());
-            mEventLocationTextView.setText(mEvent.getLocation());
+            // TODO FIX THIS getLocation() call
+            //mEventLocationTextView.setText(mEvent.getLocation());
 
             // format the date
             SimpleDateFormat sdfD = new SimpleDateFormat("MM-dd");

@@ -16,8 +16,6 @@ public class Event implements Serializable{
     private String mTitle;
     private String mOrganization;
     private String mDescription;
-    private String mLocation;
-    private Place mPlace;
     private Date mStartDate;
     private Date mEndDate;
     private LatLng mLatLng;
@@ -32,7 +30,6 @@ public class Event implements Serializable{
         mTitle = "Dummy title";
         mOrganization = "Dummy organization";
         mDescription = "Dummy description";
-        mLocation = "123 Imaginary lane";
         mStartDate = new Date();
         mEndDate = new Date();
     }
@@ -45,12 +42,11 @@ public class Event implements Serializable{
      * @param startDate
      * @param endDate
      */
-    public Event(int id, String title, String organization, String description, Date startDate, Date endDate, String loc, LatLng latlng){
+    public Event(int id, String title, String organization, String description, Date startDate, Date endDate, LatLng latlng){
         mEventID = id;
         mTitle = title;
         mOrganization = organization;
         mDescription = description;
-        mLocation = loc;
         mLatLng = latlng;
         mStartDate = startDate;
         mEndDate = endDate;
@@ -67,10 +63,6 @@ public class Event implements Serializable{
     public Date getStartDate(){return mStartDate;}
 
     public Date getEndDate(){return mEndDate;}
-
-    public String getLocation(){return mLocation;}
-
-    public Place getPlace(){return mPlace;}
 
     public LatLng getLatLng(){return mLatLng;}
 
@@ -89,10 +81,6 @@ public class Event implements Serializable{
     public void setStartDate(Date date){mStartDate = date;}
 
     public void setEndDate(Date date){mEndDate = date;}
-
-    public void setLocation(String loc){mLocation = loc;}
-
-    public void setPlace(Place place){mPlace = place;}
 
     public void setLatLng(LatLng latlng){mLatLng = latlng;}
 

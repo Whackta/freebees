@@ -87,7 +87,8 @@ public class EventDetailActivity extends AppCompatActivity implements GoogleMap.
         mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
 
         // get the place
-        mPlace = mEvent.getPlace();
+        // TODO FIX THIS .getPlace() call
+        //mPlace = mEvent.getPlace();
         // if place is null, set it to Sidney, Australia (for fun)
         if(mPlace == null){
             // leave this minimized, everything must be overridden

@@ -14,28 +14,44 @@ import java.util.List;
 /**
  * Created by Kyle on 12/10/2017.
  */
-
 public class DatabaseController {
 
-    DatabaseReference database = FirebaseDatabase.getInstance().getReference();     // reference to the Firebase database
-    List<Event> eventList = new ArrayList<Event>(1);                   // list of Event objects obtained from Firebase
+    private static DatabaseController dbControllerInstance = null;  // Singleton instance
+    private DatabaseReference database;                             // Reference to the Firebase database
+    private List<Event> eventList;                                  // List of Event objects obtained from Firebase
 
-    public DatabaseController() {
+    /**
+     * @return Singleton instance of the DatabaseController
+     */
+    public static DatabaseController getInstance() {
+        if(dbControllerInstance == null) {
+            dbControllerInstance = new DatabaseController();
+        }
+        return dbControllerInstance;
+    }
+
+    /**
+     * Initialize Firebase listeners
+     */
+    protected DatabaseController() {
+        database = FirebaseDatabase.getInstance().getReference();
+        eventList = new ArrayList(8);
+
         Date testDate = new Date(2015, 7, 23, 4, 05);
-        final Event event1 = new Event(1, "Ed's lumber fiesta", "Ed's lumber yard", "Come to my lumber yard", testDate, testDate, "123 Lumber Way", new LatLng(0.0, 0.0));
-        Event event2 = new Event(2, "Jim's hat fiesta", "Jim's hat yard", "Come to my hat yard", testDate, testDate, "321 Hat Way", new LatLng(0.0, 0.0));
-        Event event3 = new Event(3, "Don's dog fiesta", "Don's dog yard", "Come to my dog yard", testDate, testDate, "543 Dog Way", new LatLng(0.0, 0.0));
+        final Event event1 = new Event(1, "Ed's lumber fiesta", "Ed's lumber yard", "Come to my lumber yard", testDate, testDate, new LatLng(0.0, 0.0));
+        Event event2 = new Event(2, "Jim's hat fiesta", "Jim's hat yard", "Come to my hat yard", testDate, testDate, new LatLng(0.0, 0.0));
+        Event event3 = new Event(3, "Don's dog fiesta", "Don's dog yard", "Come to my dog yard", testDate, testDate, new LatLng(0.0, 0.0));
 
         database.child("events").child(Integer.toString(event1.getEventID())).setValue(event1);
         database.child("events").child(Integer.toString(event2.getEventID())).setValue(event2);
         database.child("events").child(Integer.toString(event3.getEventID())).setValue(event3);
 
         /**
-         * Keep listening to Firebase database "events" tag
+         * Keep listening to Firebase "events" tag
          */
         FirebaseDatabase.getInstance().getReference("events").addValueEventListener(new ValueEventListener() {
             /**
-             * Performs database read on initialization and continuously updates the eventList
+             * Performs database read on initialization and continuously updates the eventList with any changes in Firebase
              * @param dataSnapshot Data received from Firebase
              */
             @Override
@@ -51,7 +67,6 @@ public class DatabaseController {
                     retrievedEvent.setTitle((String) snapshot.child("title").getValue());
                     retrievedEvent.setOrganization((String) snapshot.child("organization").getValue());
                     retrievedEvent.setDescription((String) snapshot.child("description").getValue());
-                    retrievedEvent.setLocation((String) snapshot.child("location").getValue());
                     retrievedEvent.setStartDateMillis(((Long) snapshot.child("startDateMillis").getValue()).intValue());
                     retrievedEvent.setEndDateMillis(((Long) snapshot.child("endDateMillis").getValue()).intValue());
                     retrievedEvent.setLatLng(new LatLng(lat, lon));
@@ -66,9 +81,9 @@ public class DatabaseController {
 
             }
 
+            // Failed to read value
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Failed to read value
                 System.out.println("### FAILED TO READ VALUE " + databaseError.toException());
             }
         });

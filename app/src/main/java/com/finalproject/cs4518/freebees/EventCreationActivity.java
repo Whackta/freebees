@@ -199,9 +199,11 @@ public class EventCreationActivity extends FragmentActivity implements TimePicke
                 mPlace = PlacePicker.getPlace(data, this);
                 System.out.println("####### (Latitude, Longitude) = (" + mPlace.getLatLng().latitude + ", " + mPlace.getLatLng().longitude + ")");
                 System.out.println("####### Address: " + mPlace.getAddress().toString());
-                mEvent.setPlace(mPlace);
+                // TODO FIX THIS .setPlace() call
+                // mEvent.setPlace(mPlace);
                 mEvent.setLatLng(mPlace.getLatLng());
-                mEvent.setLocation(mPlace.getAddress().toString());
+                // TODO FIX THIS .setLocation() call
+                //mEvent.setLocation(mPlace.getAddress().toString());
             }
         }
     }
