@@ -31,6 +31,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -42,9 +43,6 @@ public class EventDetailActivity extends AppCompatActivity implements GoogleMap.
     TextView mEventDateTextView;
     TextView mEventTimeTextView;
     TextView mEventDescriptionTextView;
-    Place mPlace;
-
-    private PlaceDetectionClient mPlaceDetectionClient; // entry point into the place api
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,100 +68,26 @@ public class EventDetailActivity extends AppCompatActivity implements GoogleMap.
         mEventOrganizationTextView.setText(mEvent.getOrganization());
 
         // format the date
-        SimpleDateFormat sdfD = new SimpleDateFormat("MM-dd");
-        String dateStr = sdfD.format(mEvent.getStartDate());
-        mEventDateTextView.setText(dateStr);
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(mEvent.getStartDateMillis()); // set the calendar to whatever the starting date is
+        String formatMonth = c.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        mEventDateTextView.setText(formatMonth + " " + day);
 
         // format the time
-        SimpleDateFormat sdfT = new SimpleDateFormat("HH:mm");
-        String timeStartStr = sdfT.format(mEvent.getStartDate());
-        String timeEndStr = sdfT.format(mEvent.getEndDate());
-        String timeDuration = timeStartStr + " - " + timeEndStr;
-        mEventTimeTextView.setText(timeDuration);
+        int startHour = c.get(Calendar.HOUR);
+        int startMinute = c.get(Calendar.MINUTE);
+        c.setTimeInMillis(mEvent.getEndDateMillis());
+        int endHour = c.get(Calendar.HOUR);
+        int endMinute = c.get(Calendar.MINUTE);
+        mEventTimeTextView.setText(startHour + ":" + startMinute + " to " + endHour + ":" + endMinute);
 
         mEventDescriptionTextView.setText(mEvent.getDescription());
-
-        // Construct a PlaceDetectionClient.
-        mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
 
         // get the place
         // TODO FIX THIS .getPlace() call
         //mPlace = mEvent.getPlace();
         // if place is null, set it to Sidney, Australia (for fun)
-        if(mPlace == null){
-            // leave this minimized, everything must be overridden
-            mPlace = new Place() {
-                @Override
-                public String getId() {
-                    return null;
-                }
-
-                @Override
-                public List<Integer> getPlaceTypes() {
-                    return null;
-                }
-
-                @Override
-                public CharSequence getAddress() {
-                    return null;
-                }
-
-                @Override
-                public Locale getLocale() {
-                    return null;
-                }
-
-                @Override
-                public CharSequence getName() {
-                    return null;
-                }
-
-                @Override
-                public LatLng getLatLng() {
-                    return new LatLng(-33.852, 151.211);
-                }
-
-                @Override
-                public LatLngBounds getViewport() {
-                    return null;
-                }
-
-                @Override
-                public Uri getWebsiteUri() {
-                    return null;
-                }
-
-                @Override
-                public CharSequence getPhoneNumber() {
-                    return null;
-                }
-
-                @Override
-                public float getRating() {
-                    return 0;
-                }
-
-                @Override
-                public int getPriceLevel() {
-                    return 0;
-                }
-
-                @Override
-                public CharSequence getAttributions() {
-                    return null;
-                }
-
-                @Override
-                public Place freeze() {
-                    return null;
-                }
-
-                @Override
-                public boolean isDataValid() {
-                    return false;
-                }
-            };
-        }
 
         // setup the map
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -175,16 +99,17 @@ public class EventDetailActivity extends AppCompatActivity implements GoogleMap.
     public void onMapReady(GoogleMap googleMap) {
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
-        LatLng loc = mPlace.getLatLng();
+        LatLng loc = mEvent.getLatLng();
         googleMap.addMarker(new MarkerOptions().position(loc)
                 .title(mEvent.getTitle()));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
+        //googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 12.0f));
     }
 
     @Override
     public boolean onMarkerClick(final Marker marker) {
         // Retrieve the data from the marker.
-        LatLng loc = mPlace.getLatLng();
+        LatLng loc = mEvent.getLatLng();
         Double latitude = loc.latitude;
         Double longitude = loc.longitude;
 

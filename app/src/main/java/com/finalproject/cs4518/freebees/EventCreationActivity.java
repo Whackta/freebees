@@ -60,6 +60,14 @@ public class EventCreationActivity extends FragmentActivity implements TimePicke
     final int END_TIME_CODE = 1;
     int current_code = 0;
 
+    private boolean nameEntered = false;
+    private boolean organizationEntered = false;
+    private boolean dateEntered = false;
+    private boolean startTimeEntered = false;
+    private boolean endTimeEntered = false;
+    private boolean descriptionEntered = false;
+    private boolean locationEntered = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +99,6 @@ public class EventCreationActivity extends FragmentActivity implements TimePicke
 
 
         // setup the name entry
-        mNameEntry.setImeOptions(EditorInfo.IME_ACTION_DONE);
         mNameEntry.addTextChangedListener(new TextWatcher(){
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -100,6 +107,10 @@ public class EventCreationActivity extends FragmentActivity implements TimePicke
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count){
                 mEvent.setTitle(s.toString());
+                nameEntered = true;
+                if(locationEntered && dateEntered && startTimeEntered && endTimeEntered && nameEntered && organizationEntered && descriptionEntered){
+                    mPostButton.setVisibility(View.VISIBLE);
+                }
             }
             @Override
             public void afterTextChanged(Editable s) {
@@ -108,7 +119,6 @@ public class EventCreationActivity extends FragmentActivity implements TimePicke
         });
 
         // setup the organization entry
-        mOrganizationEntry.setImeOptions(EditorInfo.IME_ACTION_DONE);
         mOrganizationEntry.addTextChangedListener(new TextWatcher(){
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -117,6 +127,10 @@ public class EventCreationActivity extends FragmentActivity implements TimePicke
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count){
                 mEvent.setOrganization(s.toString());
+                organizationEntered = true;
+                if(locationEntered && dateEntered && startTimeEntered && endTimeEntered && nameEntered && organizationEntered && descriptionEntered){
+                    mPostButton.setVisibility(View.VISIBLE);
+                }
             }
             @Override
             public void afterTextChanged(Editable s) {
@@ -125,7 +139,6 @@ public class EventCreationActivity extends FragmentActivity implements TimePicke
         });
 
         // setup the description entry
-        mDescriptionEntry.setImeOptions(EditorInfo.IME_ACTION_DONE);
         mDescriptionEntry.addTextChangedListener(new TextWatcher(){
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -134,6 +147,10 @@ public class EventCreationActivity extends FragmentActivity implements TimePicke
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count){
                 mEvent.setDescription(s.toString());
+                descriptionEntered = true;
+                if(locationEntered && dateEntered && startTimeEntered && endTimeEntered && nameEntered && organizationEntered && descriptionEntered){
+                    mPostButton.setVisibility(View.VISIBLE);
+                }
             }
             @Override
             public void afterTextChanged(Editable s) {
@@ -177,6 +194,10 @@ public class EventCreationActivity extends FragmentActivity implements TimePicke
                 dateCalendar.set(Calendar.MINUTE, minute);
                 mEvent.setStartDateMillis(dateCalendar.getTimeInMillis()); // update the event
                 mStartTimePicker.setText("START TIME: " + hourOfDay + ":" + minute); // update the time
+                startTimeEntered = true;
+                if(locationEntered && dateEntered && startTimeEntered && endTimeEntered && nameEntered && organizationEntered && descriptionEntered){
+                    mPostButton.setVisibility(View.VISIBLE);
+                }
                 break;
             case END_TIME_CODE:
                 dateCalendar.setTimeInMillis(mEvent.getEndDateMillis()); // set the calendar to whatever it originally was
@@ -184,6 +205,10 @@ public class EventCreationActivity extends FragmentActivity implements TimePicke
                 dateCalendar.set(Calendar.MINUTE, minute);
                 mEvent.setEndDateMillis(dateCalendar.getTimeInMillis()); // update the event
                 mEndTimePicker.setText("END TIME: " + hourOfDay + ":" + minute); // update the time
+                endTimeEntered = true;
+                if(locationEntered && dateEntered && startTimeEntered && endTimeEntered && nameEntered && organizationEntered && descriptionEntered){
+                    mPostButton.setVisibility(View.VISIBLE);
+                }
                 break;
         }
     }
@@ -202,7 +227,10 @@ public class EventCreationActivity extends FragmentActivity implements TimePicke
         mEvent.setStartDateMillis(c.getTimeInMillis()); // update the date
         String formatMonth = c.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH);
         mDatePicker.setText("DATE: " + formatMonth + " " + day); // update the button to reflect this
-
+        dateEntered = true;
+        if(locationEntered && dateEntered && startTimeEntered && endTimeEntered && nameEntered && organizationEntered && descriptionEntered){
+            mPostButton.setVisibility(View.VISIBLE);
+        }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -215,8 +243,13 @@ public class EventCreationActivity extends FragmentActivity implements TimePicke
                 // mEvent.setPlace(mPlace);
                 mEvent.setLatLng(mPlace.getLatLng());
                 // TODO FIX THIS .setLocation() call
-                //mEvent.setLocation(mPlace.getAddress().toString());
+                mEvent.setLocation(mPlace.getAddress().toString());
+                mLocationPicker.setText(mPlace.getAddress().toString());
             }
+        }
+        locationEntered = true;
+        if(locationEntered && dateEntered && startTimeEntered && endTimeEntered && nameEntered && organizationEntered && descriptionEntered){
+            mPostButton.setVisibility(View.VISIBLE);
         }
     }
 

@@ -20,8 +20,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class EventListActivity extends AppCompatActivity {
 
@@ -145,20 +147,28 @@ public class EventListActivity extends AppCompatActivity {
         public void bind(Event theEvent){
             mEvent = theEvent;
             mEventNameTextView.setText(mEvent.getTitle());
-            // TODO FIX THIS getLocation() call
-            //mEventLocationTextView.setText(mEvent.getLocation());
+            mEventLocationTextView.setText(mEvent.getLocation());
 
             // format the date
-            SimpleDateFormat sdfD = new SimpleDateFormat("MM-dd");
-            String dateStr = sdfD.format(mEvent.getStartDate());
-            mEventDateTextView.setText(dateStr);
+            //SimpleDateFormat sdfD = new SimpleDateFormat("MM-dd");
+            //String dateStr = sdfD.format(mEvent.getStartDate());
+            Calendar c = Calendar.getInstance();
+            c.setTimeInMillis(mEvent.getStartDateMillis()); // set the calendar to whatever the starting date is
+            String formatMonth = c.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            mEventDateTextView.setText(formatMonth + " " + day);
 
             // format the time
-            SimpleDateFormat sdfT = new SimpleDateFormat("HH:mm");
-            String timeStartStr = sdfT.format(mEvent.getStartDate());
-            String timeEndStr = sdfT.format(mEvent.getEndDate());
-            String timeDuration = timeStartStr + " - " + timeEndStr;
-            mEventTimeTextView.setText(timeDuration);
+            //SimpleDateFormat sdfT = new SimpleDateFormat("HH:mm");
+            //String timeStartStr = sdfT.format(mEvent.getStartDate());
+            //String timeEndStr = sdfT.format(mEvent.getEndDate());
+            //String timeDuration = timeStartStr + " - " + timeEndStr;
+            int startHour = c.get(Calendar.HOUR);
+            int startMinute = c.get(Calendar.MINUTE);
+            c.setTimeInMillis(mEvent.getEndDateMillis());
+            int endHour = c.get(Calendar.HOUR);
+            int endMinute = c.get(Calendar.MINUTE);
+            mEventTimeTextView.setText(startHour + ":" + startMinute + " to " + endHour + ":" + endMinute);
         }
 
         @Override

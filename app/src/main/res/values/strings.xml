@@ -4,7 +4,8 @@
     <string name="title_activity_event_detail">EventDetailActivity</string>
     <string name="title_activity_event_creation">EventCreationActivity</string>
     <string name="google_maps_key_henry">AIzaSyCOln6RtUt5N4pzBkpHYj3ReWwltenKZGk</string>
-    <string name="google_maps_key">AIzaSyC5YTlRkh46NgJg6SwwrAV2E230HuFt2ls</string>
+    <string name="google_maps_key_kyle">AIzaSyC5YTlRkh46NgJg6SwwrAV2E230HuFt2ls</string>
+    <string name="google_maps_key">AIzaSyARhJ_gvL18K-Q3CCr__hXgnvc4xBquONk</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

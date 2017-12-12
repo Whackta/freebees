@@ -13,7 +13,12 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical">
-
+        <!-- Dummy layout to prevent autofocusing the edittext-->
+        <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="0px"
+            android:layout_height="0px"/>
         <ImageView
             android:id="@+id/eventPicture"
             android:layout_width="match_parent"
@@ -26,14 +31,23 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="15"
-            android:text="Enter event name..." />
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:inputType="textCapSentences"
+            android:nextFocusForward="@+id/eventOrganizationEntry"
+            android:text=""
+            android:hint="Enter event name..."/>
 
         <EditText
             android:id="@+id/eventOrganizationEntry"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="15"
-            android:text="Enter event organization..." />
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:inputType="textCapSentences"
+            android:hint="Enter event organization..."
+            android:text="" />
 
         <Button
             android:id="@+id/datePicker"
@@ -81,7 +95,11 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="15"
-            android:text="Enter a description..." />
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:inputType="textCapSentences"
+            android:text=""
+            android:hint="Enter a description..."/>
 
         <Button
             android:id="@+id/postIt"
@@ -90,7 +108,8 @@
             android:layout_marginLeft="0dp"
             android:paddingLeft="0dp"
             android:text="Post it!"
-            android:onClick="PostIt"/>
+            android:onClick="PostIt"
+            android:visibility="invisible"/>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

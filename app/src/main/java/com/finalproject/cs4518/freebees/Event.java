@@ -16,9 +16,12 @@ public class Event implements Serializable{
     private String mTitle;
     private String mOrganization;
     private String mDescription;
+    private String mLocation;
     private Date mStartDate;
     private Date mEndDate;
-    private LatLng mLatLng;
+    //private LatLng mLatLng;
+    private double mLat;
+    private double mLong;
     private long mStartDateAsMillis;
     private long mEndDateAsMillis;
 
@@ -32,6 +35,7 @@ public class Event implements Serializable{
         mDescription = "Dummy description";
         mStartDate = new Date();
         mEndDate = new Date();
+        mLocation = "123 Street Ave.";
     }
 
     /**
@@ -46,12 +50,15 @@ public class Event implements Serializable{
         mTitle = title;
         mOrganization = organization;
         mDescription = description;
-        mLatLng = latlng;
+        mLat = latlng.latitude;
+        mLong = latlng.longitude;
         mStartDate = startDate;
         mEndDate = endDate;
     }
 
     public String getEventID(){ return mEventID; }
+
+    public String getLocation(){return mLocation;}
 
     public String getTitle(){return mTitle;}
 
@@ -63,11 +70,13 @@ public class Event implements Serializable{
 
     public Date getEndDate(){return mEndDate;}
 
-    public LatLng getLatLng(){return mLatLng;}
+    public LatLng getLatLng(){return new LatLng(mLat, mLong);}
 
     public long getStartDateMillis(){return mStartDateAsMillis;}
 
     public long getEndDateMillis(){return mEndDateAsMillis;}
+
+    public void setLocation(String loc){mLocation = loc;}
 
     public void setTitle(String title){
         mTitle = title;
@@ -81,7 +90,7 @@ public class Event implements Serializable{
 
     public void setEndDate(Date date){mEndDate = date;}
 
-    public void setLatLng(LatLng latlng){mLatLng = latlng;}
+    public void setLatLng(LatLng latlng){mLat = latlng.latitude; mLong = latlng.longitude;}
 
     public void setStartDateMillis(long sd){mStartDateAsMillis = sd;}
 
