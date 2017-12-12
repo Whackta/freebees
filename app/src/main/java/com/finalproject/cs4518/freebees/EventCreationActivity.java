@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.finalproject.cs4518.freebees.database.DatabaseController;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.GeoDataClient;
@@ -36,6 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.UUID;
 
 public class EventCreationActivity extends FragmentActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener{
     Event mEvent; // the event
@@ -138,6 +140,14 @@ public class EventCreationActivity extends FragmentActivity implements TimePicke
 
             }
         });
+
+        mPostButton.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   DatabaseController.getInstance().writeEvent(mEvent);
+               }
+           }
+        );
 
     }
 

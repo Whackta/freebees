@@ -10,6 +10,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Kyle on 12/10/2017.
@@ -38,13 +39,13 @@ public class DatabaseController {
         eventList = new ArrayList(8);
 
         Date testDate = new Date(2015, 7, 23, 4, 05);
-        final Event event1 = new Event(1, "Ed's lumber fiesta", "Ed's lumber yard", "Come to my lumber yard", testDate, testDate, new LatLng(0.0, 0.0));
-        Event event2 = new Event(2, "Jim's hat fiesta", "Jim's hat yard", "Come to my hat yard", testDate, testDate, new LatLng(0.0, 0.0));
-        Event event3 = new Event(3, "Don's dog fiesta", "Don's dog yard", "Come to my dog yard", testDate, testDate, new LatLng(0.0, 0.0));
+        final Event event1 = new Event("Ed's lumber fiesta", "Ed's lumber yard", "Come to my lumber yard", testDate, testDate, new LatLng(-22.3657, 123.432));
+        final Event event2 = new Event("Jim's hat fiesta", "Jim's hat yard", "Come to my hat yard", testDate, testDate, new LatLng(42.3657, 5.7888));
+        final Event event3 = new Event("Don's dog fiesta", "Don's dog yard", "Come to my dog yard", testDate, testDate, new LatLng(0.5432, -54.22));
 
-        database.child("events").child(Integer.toString(event1.getEventID())).setValue(event1);
-        database.child("events").child(Integer.toString(event2.getEventID())).setValue(event2);
-        database.child("events").child(Integer.toString(event3.getEventID())).setValue(event3);
+        writeEvent(event1);
+        writeEvent(event2);
+        writeEvent(event3);
 
         /**
          * Keep listening to Firebase "events" tag
@@ -61,9 +62,9 @@ public class DatabaseController {
                     System.out.println("### " + snapshot.getValue());
 
                     Event retrievedEvent = new Event();
-                    Double lat = (Double) ((Long) snapshot.child("latLng").child("latitude").getValue()).doubleValue();
-                    Double lon = (Double) ((Long) snapshot.child("latLng").child("longitude").getValue()).doubleValue();
-                    retrievedEvent.setEventID(((Long) snapshot.child("eventID").getValue()).intValue());
+                    Double lat = snapshot.child("latLng").child("latitude").getValue(Double.class);
+                    Double lon = snapshot.child("latLng").child("longitude").getValue(Double.class);
+                    retrievedEvent.setEventID((String) snapshot.child("eventID").getValue());
                     retrievedEvent.setTitle((String) snapshot.child("title").getValue());
                     retrievedEvent.setOrganization((String) snapshot.child("organization").getValue());
                     retrievedEvent.setDescription((String) snapshot.child("description").getValue());
@@ -76,7 +77,7 @@ public class DatabaseController {
 
                 // Print out Event list titles
                 for (int i = 0; i < eventList.size(); i++) {
-                    System.out.println("### " + eventList.get(i).getTitle());
+                    System.out.println("### " + eventList.get(i).getLatLng().toString());
                 }
 
             }
@@ -93,9 +94,9 @@ public class DatabaseController {
      * @param id eventID of desired event
      * @return Event with the matching eventID if exists, else null
      */
-    public Event getEventByID(int id){
+    public Event getEventByID(String id){
         for(int i = 0; i < eventList.size(); i++){
-            if(eventList.get(i).getEventID() == id){
+            if(eventList.get(i).getEventID().compareTo(id) == 0){
                 return eventList.get(i);
             }
         }
@@ -110,11 +111,14 @@ public class DatabaseController {
     }
 
     /**
-     * Writes an Event object to Firebase under the "events" tag
+     * Writes an Event object to Firebase under the "events" tag after generating a unique ID
      * @param event Event object to be saved to Firebase
      */
     public void writeEvent(Event event){
-        database.child("events").child(Integer.toString(event.getEventID())).setValue(event);
+        String key = database.child("events").push().getKey();
+        event.setEventID(key);
+
+        database.child("events").child(key).setValue(event);
     }
 
 }

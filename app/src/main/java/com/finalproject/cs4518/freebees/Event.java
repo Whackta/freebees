@@ -12,7 +12,7 @@ import java.util.Date;
  */
 
 public class Event implements Serializable{
-    private int mEventID;
+    private String mEventID;
     private String mTitle;
     private String mOrganization;
     private String mDescription;
@@ -26,7 +26,7 @@ public class Event implements Serializable{
      * Simplest constructor for event, sets components to default values
      */
     public Event(){
-        mEventID = -1;
+        mEventID = "Dummy ID";
         mTitle = "Dummy title";
         mOrganization = "Dummy organization";
         mDescription = "Dummy description";
@@ -42,8 +42,7 @@ public class Event implements Serializable{
      * @param startDate
      * @param endDate
      */
-    public Event(int id, String title, String organization, String description, Date startDate, Date endDate, LatLng latlng){
-        mEventID = id;
+    public Event(String title, String organization, String description, Date startDate, Date endDate, LatLng latlng){
         mTitle = title;
         mOrganization = organization;
         mDescription = description;
@@ -52,7 +51,7 @@ public class Event implements Serializable{
         mEndDate = endDate;
     }
 
-    public int getEventID(){ return mEventID; }
+    public String getEventID(){ return mEventID; }
 
     public String getTitle(){return mTitle;}
 
@@ -84,11 +83,11 @@ public class Event implements Serializable{
 
     public void setLatLng(LatLng latlng){mLatLng = latlng;}
 
-    public void setStartDateMillis(long sd){
-        mStartDateAsMillis = sd;
-    }
+    public void setStartDateMillis(long sd){mStartDateAsMillis = sd;}
+
     public void setEndDateMillis(long sd){
         mEndDateAsMillis = sd;
     }
-    public void setEventID(int id){ mEventID = id; }
+
+    public void setEventID(String id){ mEventID = id; }
 }
