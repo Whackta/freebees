@@ -144,7 +144,9 @@ public class EventCreationActivity extends FragmentActivity implements TimePicke
         mPostButton.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
-                   DatabaseController.getInstance().writeEvent(mEvent);
+               DatabaseController.getInstance().writeEvent(mEvent);
+               Intent intent = new Intent(view.getContext(), EventListActivity.class);
+               startActivity(intent);
                }
            }
         );

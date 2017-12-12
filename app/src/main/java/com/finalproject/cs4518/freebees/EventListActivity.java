@@ -13,20 +13,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.finalproject.cs4518.freebees.database.DatabaseController;
 import com.google.android.gms.maps.model.LatLng;
-
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public class EventListActivity extends AppCompatActivity {
 
     private RecyclerView mEventRecyclerView;
     private eventAdapter mAdapter;
+    private List<Event> events;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +45,50 @@ public class EventListActivity extends AppCompatActivity {
             }
         });
 
+        events = new ArrayList<>();
         mEventRecyclerView = (RecyclerView) findViewById(R.id.event_recycler_view);
         mEventRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        updateUI();
+        /**
+         * Keep listening to Firebase "events" tag
+         */
+        FirebaseDatabase.getInstance().getReference("events").addValueEventListener(new ValueEventListener() {
+            /**
+             * Performs database read on initialization and continuously updates the eventList with any changes in Firebase
+             * @param dataSnapshot Data received from Firebase
+             */
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Parse read data for Event objects and store in List
+                events.clear();
 
-        DatabaseController.getInstance();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    System.out.println("### " + snapshot.getValue());
+
+                    Event retrievedEvent = new Event();
+                    Double lat = snapshot.child("latLng").child("latitude").getValue(Double.class);
+                    Double lon = snapshot.child("latLng").child("longitude").getValue(Double.class);
+                    retrievedEvent.setEventID((String) snapshot.child("eventID").getValue());
+                    retrievedEvent.setTitle((String) snapshot.child("title").getValue());
+                    retrievedEvent.setOrganization((String) snapshot.child("organization").getValue());
+                    retrievedEvent.setDescription((String) snapshot.child("description").getValue());
+                    retrievedEvent.setStartDateMillis(((Long) snapshot.child("startDateMillis").getValue()).intValue());
+                    retrievedEvent.setEndDateMillis(((Long) snapshot.child("endDateMillis").getValue()).intValue());
+                    retrievedEvent.setLatLng(new LatLng(lat, lon));
+
+                    events.add(retrievedEvent);
+                }
+
+                updateUI();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {  // Failed to read value
+                System.out.println("### FAILED TO READ VALUE " + databaseError.toException());
+            }
+        });
+
+        System.out.println("### FINISHED CREATE LIST ACTIVITY");
     }
 
     @Override
@@ -78,14 +117,6 @@ public class EventListActivity extends AppCompatActivity {
      * Updates the UI, mostly the recyclerview
      */
     private void updateUI(){
-        //TODO: where do we get the list of events?
-        List<Event> events = new ArrayList<Event>();
-        //TODO: make the event list not dummy
-        Date testDate = new Date(2015, 7, 23, 4, 05);
-        events.add(new Event("Ed's lumber fiesta", "Ed's lumber yard", "Come to my lumber yard", testDate, testDate, new LatLng(0.0, 0.0)));
-        events.add(new Event("Jim's hat fiesta", "Jim's hat yard", "Come to my hat yard", testDate, testDate, new LatLng(0.0, 0.0)));
-        events.add(new Event("Don's dog fiesta", "Don's dog yard", "Come to my dog yard", testDate, testDate, new LatLng(0.0, 0.0)));
-
         if(mAdapter == null){
             mAdapter = new eventAdapter(events);
             mEventRecyclerView.setAdapter(mAdapter);
