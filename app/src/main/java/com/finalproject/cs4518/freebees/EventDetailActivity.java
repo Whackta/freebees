@@ -43,6 +43,7 @@ public class EventDetailActivity extends AppCompatActivity implements GoogleMap.
     TextView mEventDateTextView;
     TextView mEventTimeTextView;
     TextView mEventDescriptionTextView;
+    TextView mEventLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +63,12 @@ public class EventDetailActivity extends AppCompatActivity implements GoogleMap.
         mEventDateTextView = findViewById(R.id.eventDate2);
         mEventTimeTextView = findViewById(R.id.eventTime2);
         mEventDescriptionTextView = findViewById(R.id.eventDesc);
+        mEventLocation = findViewById(R.id.eventLocation);
 
         // set the text views to have the event's info
         mEventNameTextView.setText(mEvent.getTitle());
         mEventOrganizationTextView.setText(mEvent.getOrganization());
+        mEventLocation.setText(mEvent.getLocation());
 
         // format the date
         Calendar c = Calendar.getInstance();

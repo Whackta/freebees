@@ -11,25 +11,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/eventPicture"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="50"
-            app:srcCompat="@android:drawable/btn_dialog" />
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/eventDetailsLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="20">
+            android:layout_weight="15">
 
             <TextView
                 android:id="@+id/eventName2"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
+                android:layout_width="245dp"
+                android:layout_height="39dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:text="Event Title"
@@ -45,33 +40,53 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:text="Event Location"
+                android:text="Event Organization"
                 android:textColor="@color/colorSubtitleText"
                 android:textColorHighlight="@color/colorSubtitleText"
-                android:textSize="14sp"
+                android:textSize="18sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/eventName2" />
 
             <TextView
                 android:id="@+id/eventDate2"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_width="87dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="January 1"
                 android:textAlignment="textStart"
                 android:textColorHighlight="@color/colorTitleText"
-                app:layout_constraintRight_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/eventName2"
+                app:layout_constraintTop_toBottomOf="@+id/eventTime2"
+                tools:textAlignment="textEnd" />
 
             <TextView
                 android:id="@+id/eventTime2"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
+                android:layout_width="107dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
                 android:text="1:00pm - 2:00pm"
                 android:textAlignment="textEnd"
                 android:textColorHighlight="@color/colorTitleText"
-                app:layout_constraintRight_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/eventDate2" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/eventName2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/eventLocation"
+                android:layout_width="245dp"
+                android:layout_height="17dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Event Location"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eventOrganization" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -85,8 +100,8 @@
             android:text="Lorem ipsum dolor sit amet, eget ligula. In posuere felis a ligula aliquet ultricies. Phasellus placerat quam nisi, convallis facilisis mauris euismod in." />
 
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
             xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"

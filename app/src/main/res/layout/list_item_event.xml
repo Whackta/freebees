@@ -29,11 +29,13 @@
         android:id="@+id/eventName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:text="Event Title"
         android:textColor="@color/colorTitleText"
         android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/eventDate"
         app:layout_constraintLeft_toRightOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

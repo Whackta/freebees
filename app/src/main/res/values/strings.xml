@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Freebees</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_event_detail">EventDetailActivity</string>
-    <string name="title_activity_event_creation">EventCreationActivity</string>
+    <string name="title_activity_event_detail">Event Details</string>
+    <string name="title_activity_event_creation">Create New Freebees Event</string>
     <string name="google_maps_key_henry">AIzaSyCOln6RtUt5N4pzBkpHYj3ReWwltenKZGk</string>
     <string name="google_maps_key_kyle">AIzaSyC5YTlRkh46NgJg6SwwrAV2E230HuFt2ls</string>
     <string name="google_maps_key">AIzaSyARhJ_gvL18K-Q3CCr__hXgnvc4xBquONk</string>

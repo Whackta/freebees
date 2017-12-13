@@ -3,71 +3,66 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="20dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.finalproject.cs4518.freebees.EventCreationActivity"
     tools:showIn="@layout/activity_event_creation">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
         <!-- Dummy layout to prevent autofocusing the edittext-->
-        <LinearLayout
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:layout_width="0px"
-            android:layout_height="0px"/>
-        <ImageView
-            android:id="@+id/eventPicture"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="50"
-            app:srcCompat="@android:drawable/btn_dialog" />
 
         <EditText
             android:id="@+id/eventNameEntry"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="50dp"
             android:layout_weight="15"
+            android:hint="Enter event name..."
             android:imeOptions="actionNext"
-            android:maxLines="1"
             android:inputType="textCapSentences"
+            android:maxLines="1"
             android:nextFocusForward="@+id/eventOrganizationEntry"
-            android:text=""
-            android:hint="Enter event name..."/>
+            android:paddingTop="0dp"
+            android:text="" />
 
         <EditText
             android:id="@+id/eventOrganizationEntry"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
             android:layout_weight="15"
-            android:imeOptions="actionDone"
-            android:maxLines="1"
-            android:inputType="textCapSentences"
             android:hint="Enter event organization..."
+            android:imeOptions="actionDone"
+            android:inputType="textCapSentences"
+            android:maxLines="1"
             android:text="" />
 
         <Button
             android:id="@+id/datePicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:layout_weight="2"
-            android:text="Select a date..."
-            android:onClick="showDatePickerDialog"/>
+            android:onClick="showDatePickerDialog"
+            android:text="Select a date..." />
 
         <Button
             android:id="@+id/locPicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:layout_weight="2"
-            android:text="Select a location..."
-            android:onClick="showLocPickerDialog"/>
+            android:onClick="showLocPickerDialog"
+            android:text="Select a location..." />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -76,40 +71,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="50"
+                android:onClick="showStartTimePickerDialog"
                 android:text="Select a starting time..."
-                android:textSize="10sp"
-                android:onClick="showStartTimePickerDialog"/>
+                android:textSize="10sp" />
 
             <Button
                 android:id="@+id/endTimePicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="50"
+                android:onClick="showEndTimePickerDialog"
                 android:text="Select an ending time..."
-                android:textSize="10sp"
-                android:onClick="showEndTimePickerDialog"/>
+                android:textSize="10sp" />
         </LinearLayout>
 
         <EditText
             android:id="@+id/Description"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:layout_weight="15"
+            android:hint="Enter a description..."
             android:imeOptions="actionDone"
-            android:maxLines="1"
             android:inputType="textCapSentences"
-            android:text=""
-            android:hint="Enter a description..."/>
+            android:maxLines="1"
+            android:text="" />
 
         <Button
             android:id="@+id/postIt"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="0dp"
+            android:onClick="PostIt"
             android:paddingLeft="0dp"
             android:text="Post it!"
-            android:onClick="PostIt"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
