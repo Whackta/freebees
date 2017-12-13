@@ -19,7 +19,6 @@ public class Event implements Serializable{
     private String mLocation;
     private Date mStartDate;
     private Date mEndDate;
-    //private LatLng mLatLng;
     private double mLat;
     private double mLong;
     private long mStartDateAsMillis;
@@ -76,7 +75,14 @@ public class Event implements Serializable{
 
     public long getEndDateMillis(){return mEndDateAsMillis;}
 
-    public void setLocation(String loc){mLocation = loc;}
+    public void setLocation(String loc){
+        if(loc.indexOf(",") != -1){
+            mLocation = loc.substring(0, loc.indexOf(","));
+        }
+        else{
+            mLocation = loc;
+        }
+    }
 
     public void setTitle(String title){
         mTitle = title;

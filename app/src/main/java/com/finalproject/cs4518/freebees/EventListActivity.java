@@ -65,8 +65,6 @@ public class EventListActivity extends AppCompatActivity {
                 events.clear();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    System.out.println("### " + snapshot.getValue());
-
                     Event retrievedEvent = new Event();
                     Double lat = snapshot.child("latLng").child("latitude").getValue(Double.class);
                     Double lon = snapshot.child("latLng").child("longitude").getValue(Double.class);
@@ -76,6 +74,7 @@ public class EventListActivity extends AppCompatActivity {
                     retrievedEvent.setDescription((String) snapshot.child("description").getValue());
                     retrievedEvent.setStartDateMillis(((Long) snapshot.child("startDateMillis").getValue()).intValue());
                     retrievedEvent.setEndDateMillis(((Long) snapshot.child("endDateMillis").getValue()).intValue());
+                    retrievedEvent.setLocation((String) snapshot.child("location").getValue());
                     retrievedEvent.setLatLng(new LatLng(lat, lon));
 
                     events.add(retrievedEvent);
@@ -90,7 +89,6 @@ public class EventListActivity extends AppCompatActivity {
             }
         });
 
-        System.out.println("### FINISHED CREATE LIST ACTIVITY");
     }
 
     @Override
